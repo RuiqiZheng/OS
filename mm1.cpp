@@ -46,7 +46,7 @@ int dispose(allocated_block *ab); //释放分配块结构体
 void display_mem_usage(); //显示内存情况
 void kill_process(); //杀死对应进程并释放其空间与结构体
 //void Usemy_algo(int id); //使用对应的分配算法
-
+inline free_block *worstFit(const allocated_block *ab) ;
 
 
 
@@ -159,21 +159,7 @@ inline void display_menu() {
 
 
 
-inline free_block *worstFit(const allocated_block *ab) {
-    int absize = ab->size;
-    free_block *worstFitBlock = nullptr;
-    int maxDiff = -1;
-    for (auto current = free_block_head; current != nullptr; current = current->next) {
-        if (current->size >= absize) {
-            int diff = current->size - absize;
-            if (diff > maxDiff) {
-                maxDiff = diff;
-                worstFitBlock = current;
-            }
-        }
-    }
-    return worstFitBlock;
-}
+
 
 inline free_block *bestFit(const allocated_block *ab) {
     int absize = ab->size;
@@ -229,6 +215,47 @@ void set_mem_size() { //更改最大内存大小
     }
 }
 
+inline free_block *worstFit(const allocated_block *ab) {
+    int absize = ab->size;
+    free_block *worstFitBlock = nullptr;
+    int maxDiff = -1;
+    for (auto current = free_block_head; current != nullptr; current = current->next) {
+        if (current->size >= absize) {
+            int diff = current->size - absize;
+            if (diff > maxDiff) {
+                maxDiff = diff;
+                worstFitBlock = current;
+            }
+        }
+    }
+    return worstFitBlock;
+}
+
+inline free_block *firstFit(const allocated_block *ab) {
+    int absize = ab->size;
+    free_block *firstFitBlock = nullptr;
+    for (auto current = free_block_head; current != nullptr; current = current->next) {
+        if (current->size >= absize) {
+            firstFitBlock = current;
+            break;
+        }
+    }
+    return firstFitBlock;
+}
+inline free_block *findFeasibleFreeBlock(const allocated_block *ab) {
+    switch (selectedAlgo) {
+        case FIRST:
+            return firstFit(ab);
+        case WORST:
+            return worstFit(ab);
+        case BEST:
+            return bestFit(ab);
+        case BUDDY:
+            return buddy(ab);
+        default:
+            return nullptr;
+    }
+}
 int allocate_mem(allocated_block *ab) { //为块分配内存，真正的操作系统会在这里进行置换等操作
     if (allocated_block_head == nullptr) {
         allocated_block_head = ab;
@@ -307,20 +334,7 @@ int create_new_process() { //创建新进程
     return allocate_mem(ab);
 }
 
-inline free_block *findFeasibleFreeBlock(const allocated_block *ab) {
-    switch (selectedAlgo) {
-        case FIRST:
-            return firstFit(ab);
-        case WORST:
-            return worstFit(ab);
-        case BEST:
-            return bestFit(ab);
-        case BUDDY:
-            return buddy(ab);
-        default:
-            return nullptr;
-    }
-}
+
 
 void swap(int *p, int *q) {
     int tmp = *p;
@@ -348,7 +362,26 @@ void rearrange() { //将块按照地址大小进行排序
     puts("Rearrange Done.");
 }
 
-
+void mergeFreeBlocks() {
+    auto current = free_block_head;
+    auto anchor = free_block_head;
+    while (current != nullptr) {
+        auto next = current->next;
+        if (next == nullptr)
+            break;
+        if (next->start_addr == current->start_addr + current->size) {
+            current->size += next->size; //merge
+            //release the segment
+            current->next = next->next;
+            free(next);
+            current = anchor; //rollback to anchor
+        } else //a gap between current node and the next node
+        {
+            anchor = next;
+            current = next;
+        }
+    }
+}
 
 int free_mem(allocated_block *ab) { //释放某一块的内存
     bool foundContinuousBlock = false;
@@ -384,26 +417,7 @@ int free_mem(allocated_block *ab) { //释放某一块的内存
     return 0;
 }
 //merge free block segments
-void mergeFreeBlocks() {
-    auto current = free_block_head;
-    auto anchor = free_block_head;
-    while (current != nullptr) {
-        auto next = current->next;
-        if (next == nullptr)
-            break;
-        if (next->start_addr == current->start_addr + current->size) {
-            current->size += next->size; //merge
-            //release the segment
-            current->next = next->next;
-            free(next);
-            current = anchor; //rollback to anchor
-        } else //a gap between current node and the next node
-        {
-            anchor = next;
-            current = next;
-        }
-    }
-}
+
 int dispose(allocated_block *fab) { //释放结构体所占的内存
     allocated_block *pre, *ab;
     if (fab == allocated_block_head) {
@@ -438,17 +452,7 @@ void kill_process() { //杀死某个进程
     }
 }
 
-inline free_block *firstFit(const allocated_block *ab) {
-    int absize = ab->size;
-    free_block *firstFitBlock = nullptr;
-    for (auto current = free_block_head; current != nullptr; current = current->next) {
-        if (current->size >= absize) {
-            firstFitBlock = current;
-            break;
-        }
-    }
-    return firstFitBlock;
-}
+
 
 void display_mem_usage() {
     free_block *fb = free_block_head;
