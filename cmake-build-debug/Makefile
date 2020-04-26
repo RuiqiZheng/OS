@@ -150,6 +150,60 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles/week10.dir/build.make CMakeFiles/week10.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+mm.o: mm.cpp.o
+
+.PHONY : mm.o
+
+# target to build an object file
+mm.cpp.o:
+	$(MAKE) -f CMakeFiles/week10.dir/build.make CMakeFiles/week10.dir/mm.cpp.o
+.PHONY : mm.cpp.o
+
+mm.i: mm.cpp.i
+
+.PHONY : mm.i
+
+# target to preprocess a source file
+mm.cpp.i:
+	$(MAKE) -f CMakeFiles/week10.dir/build.make CMakeFiles/week10.dir/mm.cpp.i
+.PHONY : mm.cpp.i
+
+mm.s: mm.cpp.s
+
+.PHONY : mm.s
+
+# target to generate assembly for a file
+mm.cpp.s:
+	$(MAKE) -f CMakeFiles/week10.dir/build.make CMakeFiles/week10.dir/mm.cpp.s
+.PHONY : mm.cpp.s
+
+mm1.o: mm1.cpp.o
+
+.PHONY : mm1.o
+
+# target to build an object file
+mm1.cpp.o:
+	$(MAKE) -f CMakeFiles/week10.dir/build.make CMakeFiles/week10.dir/mm1.cpp.o
+.PHONY : mm1.cpp.o
+
+mm1.i: mm1.cpp.i
+
+.PHONY : mm1.i
+
+# target to preprocess a source file
+mm1.cpp.i:
+	$(MAKE) -f CMakeFiles/week10.dir/build.make CMakeFiles/week10.dir/mm1.cpp.i
+.PHONY : mm1.cpp.i
+
+mm1.s: mm1.cpp.s
+
+.PHONY : mm1.s
+
+# target to generate assembly for a file
+mm1.cpp.s:
+	$(MAKE) -f CMakeFiles/week10.dir/build.make CMakeFiles/week10.dir/mm1.cpp.s
+.PHONY : mm1.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -162,6 +216,12 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... mm.o"
+	@echo "... mm.i"
+	@echo "... mm.s"
+	@echo "... mm1.o"
+	@echo "... mm1.i"
+	@echo "... mm1.s"
 .PHONY : help
 
 

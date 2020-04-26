@@ -5,6 +5,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/zhengruiqi/Documents/junior/2020spring/操作系统/week10/main.cpp" "/Users/zhengruiqi/Documents/junior/2020spring/操作系统/week10/cmake-build-debug/CMakeFiles/week10.dir/main.cpp.o"
+  "/Users/zhengruiqi/Documents/junior/2020spring/操作系统/week10/mm.cpp" "/Users/zhengruiqi/Documents/junior/2020spring/操作系统/week10/cmake-build-debug/CMakeFiles/week10.dir/mm.cpp.o"
+  "/Users/zhengruiqi/Documents/junior/2020spring/操作系统/week10/mm1.cpp" "/Users/zhengruiqi/Documents/junior/2020spring/操作系统/week10/cmake-build-debug/CMakeFiles/week10.dir/mm1.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 

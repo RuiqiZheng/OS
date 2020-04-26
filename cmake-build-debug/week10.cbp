@@ -83,6 +83,12 @@
 		<Unit filename="/Users/zhengruiqi/Documents/junior/2020spring/操作系统/week10/main.cpp">
 			<Option target="week10"/>
 		</Unit>
+		<Unit filename="/Users/zhengruiqi/Documents/junior/2020spring/操作系统/week10/mm.cpp">
+			<Option target="week10"/>
+		</Unit>
+		<Unit filename="/Users/zhengruiqi/Documents/junior/2020spring/操作系统/week10/mm1.cpp">
+			<Option target="week10"/>
+		</Unit>
 		<Unit filename="/Users/zhengruiqi/Documents/junior/2020spring/操作系统/week10/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
